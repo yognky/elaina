@@ -9,7 +9,6 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      user-select: none; /* elegant neon vibe, text tetap bisa di-copy via input */
     }
 
     body {
@@ -24,22 +23,21 @@
 
     /* panel utama neon ungu */
     .neon-panel {
-      max-width: 780px;
+      max-width: 820px;
       width: 100%;
       background: rgba(20, 10, 40, 0.55);
       backdrop-filter: blur(12px);
       border-radius: 3rem;
       padding: 2rem 1.8rem 2.5rem 1.8rem;
-      box-shadow: 0 0 20px #b77eff55, 0 0 40px #9b59b644, 0 0 0 2px rgba(180, 110, 255, 0.2) inset, 0 0 0 4px rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(170, 90, 255, 0.6);
-      transition: all 0.2s ease;
+      box-shadow: 0 0 20px #b77effaa, 0 0 40px #9b59b6aa, 0 0 0 2px rgba(180, 110, 255, 0.3) inset;
+      border: 1px solid rgba(170, 90, 255, 0.7);
+      transition: box-shadow 0.2s ease;
     }
 
-    /* header gaya neon */
     .title-glow {
       text-align: center;
       margin-bottom: 1.8rem;
-      border-bottom: 1px dashed #c084fc60;
+      border-bottom: 1px dashed #c084fc80;
       padding-bottom: 0.75rem;
     }
 
@@ -68,7 +66,7 @@
     }
 
     .badge {
-      background: #2a1a4e80;
+      background: #2a1a4ecc;
       backdrop-filter: blur(4px);
       padding: 0.2rem 1rem;
       border-radius: 40px;
@@ -76,7 +74,6 @@
       border-left: 2px solid #bc7aff;
     }
 
-    /* area input */
     .input-area, .output-area {
       margin: 1.8rem 0 1.4rem 0;
     }
@@ -89,9 +86,9 @@
       margin-bottom: 8px;
       font-size: 0.85rem;
       text-transform: uppercase;
-      background: rgba(100, 50, 180, 0.3);
+      background: rgba(100, 50, 180, 0.4);
       display: inline-block;
-      padding: 0 12px;
+      padding: 0 14px;
       border-radius: 30px;
       backdrop-filter: blur(2px);
     }
@@ -103,12 +100,12 @@
       border-radius: 2rem;
       padding: 1rem 1.5rem;
       color: #f0eaff;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-family: 'Fira Mono', monospace;
       font-weight: 500;
       resize: vertical;
       transition: 0.2s;
-      box-shadow: 0 0 10px #a44eff40;
+      box-shadow: 0 0 8px #a44eff40;
     }
 
     .morse-input:focus {
@@ -118,7 +115,6 @@
       background: #100926;
     }
 
-    /* tombol neonya */
     .btn-group {
       display: flex;
       gap: 1.2rem;
@@ -155,7 +151,6 @@
       transform: scale(0.97);
     }
 
-    /* area hasil morse */
     .result-card {
       background: #0a031fc9;
       border-radius: 2rem;
@@ -167,13 +162,13 @@
 
     .morse-code {
       font-family: 'Courier New', 'Fira Code', monospace;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: bold;
       word-break: break-all;
       letter-spacing: 2px;
       color: #ffd966;
       text-shadow: 0 0 5px #ffb347;
-      background: #00000055;
+      background: #00000066;
       padding: 0.7rem;
       border-radius: 1.5rem;
       text-align: center;
@@ -189,20 +184,14 @@
       margin-top: 0.3rem;
     }
 
-    /* sandi balik (morse ke teks) tambahan biar keren */
     .reverse-section {
-      margin-top: 1rem;
+      margin-top: 1.2rem;
       border-top: 1px dashed #a165ff70;
       padding-top: 1.2rem;
     }
 
     small {
       color: #b388ff;
-    }
-
-    hr {
-      border-color: #632c9a40;
-      margin: 1rem 0;
     }
 
     footer {
@@ -217,6 +206,17 @@
       color: #ffae70;
       font-size: 0.7rem;
       margin-top: 5px;
+    }
+
+    .example-format {
+      background: #1f1640;
+      border-radius: 20px;
+      padding: 8px 14px;
+      font-size: 0.75rem;
+      font-family: monospace;
+      color: #c5b0ff;
+      margin-top: 10px;
+      text-align: center;
     }
 
     @media (max-width: 550px) {
@@ -237,16 +237,16 @@
   <div class="title-glow">
     <h1>✦ ARCEUS GENERATOR ✦</h1>
     <div class="sub">
-      <span class="badge">⚡ MORSE CODE TOOL</span>
-      <span class="badge">🎧 TEXT → SANDI MORSE</span>
+      <span class="badge">⚡ SANDI MORSE</span>
+      <span class="badge">🎧 TEXT → MORSE</span>
       <span class="badge">🔮 by Syahrul</span>
     </div>
   </div>
 
-  <!-- bagian utama text -> morse -->
+  <!-- bagian utama text -> morse dengan format spasi + slash separator kata -->
   <div class="input-area">
-    <label>📟 MASUKKAN TEKS / KALIMAT</label>
-    <textarea id="textInput" rows="3" class="morse-input" placeholder="Contoh: ARCEUS RULEZ  /  halo dunia  /  syahrul keren"></textarea>
+    <label>📟 TULIS TEKS / KALIMAT</label>
+    <textarea id="textInput" rows="3" class="morse-input" placeholder="Contoh: ARCEUS KEREN / halo dunia morse"></textarea>
   </div>
 
   <div class="btn-group">
@@ -256,31 +256,34 @@
 
   <div class="output-area">
     <div class="result-card">
-      <div style="display: flex; justify-content: space-between;">
-        <label>🎛️ SANDI MORSE • OUTPUT</label>
+      <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+        <label>🎛️ HASIL SANDI MORSE</label>
         <button id="copyMorseBtn" class="btn-neon" style="padding: 0.2rem 1rem; font-size: 0.7rem;">📋 SALIN</button>
       </div>
-      <div id="morseResult" class="morse-code">▪ ▪ ▪   — — —   ▪ ▪ ▪</div>
+      <div id="morseResult" class="morse-code">.... . .-.. .-.. --- / .-- --- .-. .-.. -..</div>
       <div class="label-mute">
-        <span>🔊 (titik = .  strip = -)  spasi antar huruf = "  " (2 spasi) , antar kata = "   " (4 spasi)</span>
+        <span>🔤 Format: huruf dipisah spasi (1 spasi), kata dipisah <strong style="color:#ffbc6e;">" / "</strong> (spasi-slash-spasi)</span>
       </div>
     </div>
   </div>
 
-  <!-- fitur tambahan: morse ke teks (reverse / decoder) -->
+  <!-- fitur tambahan: morse ke teks (decoder) support format dengan slash -->
   <div class="reverse-section">
     <label>🔄 MORSE → TEKS (DECODER)</label>
-    <textarea id="morseInputDecoder" rows="2" class="morse-input" placeholder="Contoh morse: .-. .- - ..- ...   .- .-. -.-. . ..- ..."></textarea>
+    <textarea id="morseInputDecoder" rows="2" class="morse-input" placeholder="Contoh: .... .- .-.. --- / .- -.- ..- / ... -.-- .- .... .-. ..- .-.."></textarea>
     <div class="btn-group" style="margin: 0.8rem 0 0.5rem 0;">
       <button id="decodeMorseBtn" class="btn-neon" style="padding: 0.4rem 1.5rem;">🔓 TERJEMAHKAN MORSE</button>
     </div>
     <div class="result-card" style="margin-top: 0.5rem;">
-      <label>📝 HASIL DEKODE</label>
+      <label>📝 HASIL DEKODE (TEKS BIASA)</label>
       <div id="decodedText" class="morse-code" style="font-size:1.1rem; background:#00000066;">—</div>
+    </div>
+    <div class="example-format">
+      💡 Contoh format morse: <strong>.... . .-.. .-.. --- / .-- --- .-. .-.. -..</strong> → "HELLO WORLD"
     </div>
   </div>
   <footer>
-    🟣 ARCEUS GENERATOR by Syahrul • teknologi neon ungu • text ⇄ morse code
+    🟣 ARCEUS GENERATOR by Syahrul • neon ungu • text ⇄ morse dengan pemisah <strong style="color:#ffbc6e;">" / "</strong>
   </footer>
 </div>
 
@@ -298,110 +301,112 @@
     ['.', '.-.-.-'], [',', '--..--'], ['?', '..--..'], ['!', '-.-.--'], ['\'', '.----.'],
     ['"', '.-..-.'], ['(', '-.--.'], [')', '-.--.-'], ['&', '.-...'], [':', '---...'],
     [';', '-.-.-.'], ['=', '-...-'], ['+', '.-.-.'], ['-', '-....-'], ['_', '..--.-'],
-    ['/', '-..-.'], ['@', '.--.-.'], [' ', ' ']  // spasi khusus ditangani di fungsi
+    ['/', '-..-.'], ['@', '.--.-.'], [' ', ' ']  
   ]);
 
-  // map kebalikan morse -> teks
+  // map kebalikan morse -> teks (untuk decoder)
   const morseToTextMap = new Map();
   for (let [key, value] of textToMorseMap.entries()) {
     if (key !== ' ') {
       morseToTextMap.set(value, key);
     }
   }
-  // tambahkan kode spasi (tidak diperlukan secara terpisah)
 
-  // --- fungsi enkripsi teks biasa ke sandi morse (format standar)
-  function encodeToMorse(plainText) {
+  /**
+   * Enkode Teks biasa ke Sandi Morse dengan format:
+   * - Antar huruf: 1 spasi
+   * - Antar kata: " / " (spasi + slash + spasi)
+   * Contoh: "HALO AKU" -> ".... .- .-.. --- / .- -.- ..-"
+   */
+  function encodeToMorseWithSlash(plainText) {
     if (!plainText || plainText.trim() === "") return "";
-    let result = [];
+    
     let upperText = plainText.toUpperCase();
-    for (let i = 0; i < upperText.length; i++) {
-      let char = upperText[i];
-      if (char === ' ') {
-        // spasi antar kata -> "/" atau separator jelas, tapi kami pakai ' / ' untuk tampilan rapi? 
-        // namun standar morse umum: spasi antar kata digambarkan dengan "   " (tiga spasi) 
-        // sesuai best practice, kita akan gunakan ' / ' sebagai pembatas kata agar user friendly.
-        // namun agar decoder bekerja kita harus konsisten: output encoder akan pakai ' / ' untuk antar kata.
-        result.push('/');
-      } else {
-        let morseChar = textToMorseMap.get(char);
-        if (morseChar) {
-          result.push(morseChar);
-        } else {
-          // karakter tidak dikenal diganti dengan '?'
-          result.push('?');
-        }
-      }
-    }
-    // gabungkan antar huruf dengan spasi tunggal " ", dan antar kata " / " 
-    // standar enkode: tiap huruf pisah spasi, kata pisah " / "
-    let finalMorse = [];
-    for (let i = 0; i < result.length; i++) {
-      let token = result[i];
-      if (token === '/') {
-        finalMorse.push(' / ');
-      } else {
-        finalMorse.push(token);
-      }
-    }
-    // gabungkan dengan spasi antar elemen (huruf) dan separator kata menjadi spasi-tiga-spasi? biar rapi.
-    // tapi yang umum adalah antara huruf 1 spasi, antara kata 3 spasi. Kita akan gunakan pendekatan simple:
-    // antara huruf: " " (spasi tunggal), antara kata "   " (tiga spasi)
-    // namun karena array token sudah mengandung '/', kita ubah dengan tiga spasi.
-    let rebuilt = [];
-    for (let i = 0; i < result.length; i++) {
-      let item = result[i];
-      if (item === '/') {
-        rebuilt.push('   '); // tiga spasi sebagai pemisah kata
-      } else {
-        rebuilt.push(item);
-      }
-    }
-    // gabungkan dengan satu spasi untuk antar huruf.
-    let output = rebuilt.join(' ');
-    // membersihkan spasi berlebihan: ganti multiple spasi menjadi optimal.
-    output = output.replace(/   /g, '   '); // menjaga tiga spasi
-    // jika ada tanda '/'' tidak sengaja karena penggantian tidak perlu, aman.
-    output = output.replace(/ \/ /g, '   '); // double safe
-    // trim
-    return output.trim();
-  }
-
-  // --- dekode dari morse ke teks (support format: titik dan strip, spasi antar huruf 1 spasi, antar kata 3 spasi atau simbol '/')
-  function decodeMorse(morseString) {
-    if (!morseString || morseString.trim() === "") return "";
-    let trimmed = morseString.trim();
-    // normalisasi: kita support separator kata dengan ' / ' atau tiga spasi, atau dua spasi?
-    // kita ubah semua varian antar kata menjadi ' / ' untuk splitting.
-    // step: ganti tiga spasi atau lebih menjadi token ' / ' sementara.
-    let normalized = trimmed.replace(/\s{3,}/g, ' / ');
-    // lalu split berdasarkan spasi tunggal untuk mendapatkan token huruf morse, dan slash sebagai penanda kata.
-    let tokens = normalized.split(' ');
     let words = [];
-    let currentWord = [];
-    for (let token of tokens) {
-      if (token === '/') {
-        if (currentWord.length > 0) {
-          words.push(currentWord.join(''));
-          currentWord = [];
-        }
-        // tanda pemisah kata, abaikan token slash (push kosong antar kata)
-        // untuk memastikan spasi kata, kita push space setelah join nanti
-      } else if (token !== '') {
-        // token morse seperti ".-" atau "..."
-        let decodedChar = morseToTextMap.get(token);
-        if (decodedChar) {
-          currentWord.push(decodedChar);
+    let currentWordMorse = [];
+    
+    // Pisahkan berdasarkan spasi atau baris baru untuk mendeteksi kata
+    // tapi untuk memudahkan, kita split berdasarkan spasi dan newline jadi array kata
+    let rawWords = upperText.split(/\s+/);
+    
+    for (let w = 0; w < rawWords.length; w++) {
+      let word = rawWords[w];
+      if (word === "") continue;
+      let morseLetters = [];
+      for (let i = 0; i < word.length; i++) {
+        let ch = word[i];
+        let morseChar = textToMorseMap.get(ch);
+        if (morseChar) {
+          morseLetters.push(morseChar);
         } else {
-          currentWord.push('?'); // untuk kode morse tidak dikenal
+          // Karakter tidak dikenal, pakai tanda tanya (?)
+          morseLetters.push('?');
         }
       }
+      // gabungkan huruf dalam satu kata dengan spasi tunggal
+      let morseWord = morseLetters.join(' ');
+      if (morseWord.length > 0) {
+        currentWordMorse.push(morseWord);
+      }
     }
-    if (currentWord.length > 0) words.push(currentWord.join(''));
-    return words.join(' ');
+    
+    // gabungkan antar kata dengan " / " (spasi-slash-spasi)
+    let result = currentWordMorse.join(' / ');
+    return result;
   }
 
-  // DOM elements
+  /**
+   * Decode Morse (dengan format yang mendukung " / " sebagai pemisah kata)
+   * Mendukung:
+   * - spasi antar huruf
+   * - " / " (spasi-slash-spasi) antar kata
+   * - juga bisa menerima 3 spasi sebagai pemisah kata (opsional, tetapi lebih fokus slash)
+   */
+  function decodeMorseWithSlash(morseString) {
+    if (!morseString || morseString.trim() === "") return "";
+    
+    let trimmed = morseString.trim();
+    
+    // Normalisasi: kita pisah berdasarkan pola " / " terlebih dahulu untuk mendapatkan array kata dalam morse
+    // Kemudian tiap kata akan di-split berdasarkan spasi menjadi huruf-huruf morse.
+    let wordsMorse = [];
+    // Jika ada spasi ganda atau 3 spasi sebelumnya, kita treat sebagai slash juga. Tapi utama kita cari " / "
+    // Pakai regex split dengan delimiter yang mempertahankan slash
+    let parts = trimmed.split(/\s+\/\s+/);
+    for (let part of parts) {
+      if (part.trim() !== "") {
+        wordsMorse.push(part.trim());
+      }
+    }
+    
+    // Jika tidak ditemukan slash, mungkin hanya satu kata (tanpa slash) atau format lain.
+    // Fallback: jika hasil split tidak menghasilkan apa-apa, coba seluruh string sebagai satu kata.
+    if (wordsMorse.length === 0 && trimmed.length > 0) {
+      wordsMorse = [trimmed];
+    }
+    
+    let decodedWords = [];
+    for (let morseWord of wordsMorse) {
+      // split berdasarkan spasi (satu atau lebih) untuk mendapatkan kode tiap huruf
+      let morseLetters = morseWord.split(/\s+/);
+      let decodedWord = "";
+      for (let code of morseLetters) {
+        if (code === "") continue;
+        let char = morseToTextMap.get(code);
+        if (char) {
+          decodedWord += char;
+        } else {
+          // Jika kode tidak dikenal, coba simpan ? tapi jangan dianggap error
+          decodedWord += '?';
+        }
+      }
+      if (decodedWord.length > 0) decodedWords.push(decodedWord);
+    }
+    
+    return decodedWords.join(' ');
+  }
+
+  // ----- DOM elements -----
   const textInput = document.getElementById('textInput');
   const morseResultDiv = document.getElementById('morseResult');
   const convertBtn = document.getElementById('convertToMorseBtn');
@@ -411,103 +416,124 @@
   const decodeMorseBtn = document.getElementById('decodeMorseBtn');
   const decodedTextDiv = document.getElementById('decodedText');
 
-  // Fungsi utama generate morse dari text
-  function generateMorse() {
+  // Generate Morse dari text (format slash)
+  function generateMorseFromText() {
     let rawText = textInput.value;
     if (!rawText.trim()) {
       morseResultDiv.innerText = '⚠️ [masukkan teks terlebih dahulu]';
       return;
     }
-    let morseCode = encodeToMorse(rawText);
-    if (morseCode === "") {
-      morseResultDiv.innerText = '▪ ▪ ▪   — — —   ▪ ▪ ▪';
+    let morseResult = encodeToMorseWithSlash(rawText);
+    if (morseResult === "") {
+      morseResultDiv.innerText = '▪▪▪ / ▪▪▪';
     } else {
-      morseResultDiv.innerText = morseCode;
+      morseResultDiv.innerText = morseResult;
     }
   }
 
-  // fungsi decode dari input morse field
-  function performDecode() {
+  // Decode Morse ke teks (support format slash)
+  function decodeMorseToText() {
     let morseRaw = morseInputDecoder.value;
     if (!morseRaw.trim()) {
-      decodedTextDiv.innerText = '⛔ Masukkan kode Morse (contoh: .-. .- - ..- ...)';
+      decodedTextDiv.innerText = '⛔ Masukkan kode Morse (contoh: .... . .-.. .-.. --- / .-- --- .-. .-.. -..)';
       return;
     }
-    let decoded = decodeMorse(morseRaw);
+    let decoded = decodeMorseWithSlash(morseRaw);
     if (decoded === "") {
-      decodedTextDiv.innerText = '❓ Tidak dapat diterjemahkan';
+      decodedTextDiv.innerText = '❓ Tidak dapat diterjemahkan, pastikan format morse benar';
     } else {
       decodedTextDiv.innerText = decoded;
     }
   }
 
-  // bersihkan semua field
-  function clearAll() {
+  // Bersihkan semua field
+  function clearAllFields() {
     textInput.value = '';
-    morseResultDiv.innerText = '▪ ▪ ▪   — — —   ▪ ▪ ▪';
+    morseResultDiv.innerText = '.... . .-.. .-.. --- / .-- --- .-. .-.. -..';
     morseInputDecoder.value = '';
     decodedTextDiv.innerText = '—';
   }
 
-  // copy hasil morse ke clipboard
+  // Salin hasil morse ke clipboard
   async function copyMorseToClip() {
     let morseText = morseResultDiv.innerText;
-    if (morseText === '▪ ▪ ▪   — — —   ▪ ▪ ▪' || morseText.includes('masukkan teks')) {
-      // jangan copy placeholder error
-      let warnMsg = 'Tidak ada hasil morse untuk disalin. Generate dulu!';
-      morseResultDiv.innerText = warnMsg;
-      setTimeout(() => {
-        if (textInput.value.trim() !== "") generateMorse();
-        else morseResultDiv.innerText = '▪ ▪ ▪   — — —   ▪ ▪ ▪';
-      }, 1200);
-      return;
+    if (morseText.includes('⚠️') || morseText === '.... . .-.. .-.. --- / .-- --- .-. .-.. -..' && textInput.value === "") {
+      // Jika belum generate atau masih placeholder, cek apakah ada input text?
+      if (!textInput.value.trim()) {
+        // beri feedback ringan
+        morseResultDiv.innerText = '⚠️ Tidak ada data morse untuk disalin!';
+        setTimeout(() => {
+          if (textInput.value.trim() === "") morseResultDiv.innerText = '.... . .-.. .-.. --- / .-- --- .-. .-.. -..';
+          else generateMorseFromText();
+        }, 1200);
+        return;
+      } else {
+        // jika ada teks, generate ulang biar update
+        generateMorseFromText();
+        morseText = morseResultDiv.innerText;
+      }
     }
-    try {
-      await navigator.clipboard.writeText(morseText);
-      // feedback visual
-      let original = morseResultDiv.innerText;
-      morseResultDiv.innerText = '✓ TERSALIN! ✓';
-      setTimeout(() => {
-        morseResultDiv.innerText = original;
-      }, 1000);
-    } catch (err) {
-      alert('Gagal menyalin: ' + err);
+    if (morseText && morseText !== "") {
+      try {
+        await navigator.clipboard.writeText(morseText);
+        let original = morseResultDiv.innerText;
+        morseResultDiv.innerText = '✓ TERSALIN! ✓';
+        setTimeout(() => {
+          morseResultDiv.innerText = original;
+        }, 900);
+      } catch (err) {
+        alert('Gagal menyalin: ' + err);
+      }
+    } else {
+      alert('Tidak ada hasil morse untuk disalin.');
     }
   }
 
-  // auto realtime? tidak berlebihan, kami pakai event listener tambahan optional (biar smooth)
-  convertBtn.addEventListener('click', generateMorse);
-  clearBtn.addEventListener('click', clearAll);
+  // Event listeners
+  convertBtn.addEventListener('click', generateMorseFromText);
+  clearBtn.addEventListener('click', clearAllFields);
   copyMorseBtn.addEventListener('click', copyMorseToClip);
-  decodeMorseBtn.addEventListener('click', performDecode);
-
-  // tambahan: enter pintasan? biar nyaman, user bisa tekan Ctrl+Enter di area text bisa generate morse
+  decodeMorseBtn.addEventListener('click', decodeMorseToText);
+  
+  // Shortcut: Ctrl+Enter pada text input untuk generate morse
   textInput.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       e.preventDefault();
-      generateMorse();
+      generateMorseFromText();
     }
   });
+  
+  // Shortcut pada area decoder: Ctrl+Enter untuk decode
   morseInputDecoder.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       e.preventDefault();
-      performDecode();
+      decodeMorseToText();
     }
   });
-
-  // contoh demo awal default menaruh teks sambutan
-  textInput.value = "Arceus by Syahrul";
-  generateMorse(); // generate otomatis
-  morseInputDecoder.value = ".- .-. -.-. . ..- ...   ..-. --- .-.   . ...- . .-.";
-  performDecode();
-
-  // efek neon dinamis tambahan? biar makin ungu, kita tambahkan shadow bergerak kecil (optional)
+  
+  // DEMO AWAL yang memperlihatkan format dengan slash sesuai contoh ".... . .-.. .-.. --- / .- -.- ..- / ... -.-- .- .... .-. ..- .-.."
+  // Set contoh teks awal dengan welcome message dan tampilkan morse khas
+  textInput.value = "ARCEUS GENERATOR BY SYAHRUL";
+  generateMorseFromText();  // menghasilkan morse dengan slash
+  
+  // Set contoh pada decoder dengan format yang indah: ".... . .-.. .-.. --- / .- -.- ..- / ... -.-- .- .... .-. ..- .-.."
+  morseInputDecoder.value = ".... . .-.. .-.. --- / .- -.- ..- / ... -.-- .- .... .-. ..- .-..";
+  // decode otomatis untuk memperlihatkan kemampuan decoder
+  decodeMorseToText();
+  
+  // Efek neon breathing pada panel (opsional) biar makin keren ungu
   const panel = document.querySelector('.neon-panel');
-  setInterval(() => {
-    // soft breathing effect neon
-    let glowIntensity = (Math.sin(Date.now() / 1800) * 0.5 + 0.6).toFixed(2);
-    panel.style.boxShadow = `0 0 ${10 + Number(glowIntensity) * 8}px #b77effaa, 0 0 ${25 + Number(glowIntensity) * 10}px #9b59b688, 0 0 0 2px rgba(180, 110, 255, 0.25) inset`;
+  let breathInterval = setInterval(() => {
+    if (panel) {
+      let glow = (Math.sin(Date.now() / 1800) * 0.35 + 0.65).toFixed(2);
+      panel.style.boxShadow = `0 0 ${12 + Number(glow) * 12}px #c47effcc, 0 0 ${20 + Number(glow) * 15}px #a05effaa, 0 0 0 2px rgba(190, 130, 255, 0.3) inset`;
+    }
   }, 200);
+  
+  // Bersihkan interval saat halaman ditutup (opsional)
+  window.addEventListener('beforeunload', () => {
+    if (breathInterval) clearInterval(breathInterval);
+  });
 </script>
 </body>
   </html>
