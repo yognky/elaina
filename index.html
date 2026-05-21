@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Arceus Generator ✦ Morse Code by Syahrul</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none; /* elegant neon vibe, text tetap bisa di-copy via input */
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 20% 30%, #0a0a1f, #03010c);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', 'Segoe UI', 'Orbitron', monospace;
+      padding: 1.5rem;
+    }
+
+    /* panel utama neon ungu */
+    .neon-panel {
+      max-width: 780px;
+      width: 100%;
+      background: rgba(20, 10, 40, 0.55);
+      backdrop-filter: blur(12px);
+      border-radius: 3rem;
+      padding: 2rem 1.8rem 2.5rem 1.8rem;
+      box-shadow: 0 0 20px #b77eff55, 0 0 40px #9b59b644, 0 0 0 2px rgba(180, 110, 255, 0.2) inset, 0 0 0 4px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(170, 90, 255, 0.6);
+      transition: all 0.2s ease;
+    }
+
+    /* header gaya neon */
+    .title-glow {
+      text-align: center;
+      margin-bottom: 1.8rem;
+      border-bottom: 1px dashed #c084fc60;
+      padding-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #e9b0ff, #bc7aff, #a05eff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 8px #c45effaa, 0 0 18px #9b51e0;
+      font-family: 'Orbitron', monospace;
+    }
+
+    .sub {
+      font-size: 0.8rem;
+      color: #cdb5ff;
+      text-shadow: 0 0 3px #b77eff;
+      letter-spacing: 2px;
+      margin-top: 6px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: #2a1a4e80;
+      backdrop-filter: blur(4px);
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      border-left: 2px solid #bc7aff;
+    }
+
+    /* area input */
+    .input-area, .output-area {
+      margin: 1.8rem 0 1.4rem 0;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      color: #e2ccff;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      background: rgba(100, 50, 180, 0.3);
+      display: inline-block;
+      padding: 0 12px;
+      border-radius: 30px;
+      backdrop-filter: blur(2px);
+    }
+
+    .morse-input {
+      width: 100%;
+      background: #0b051ec9;
+      border: 1.5px solid #a75eff;
+      border-radius: 2rem;
+      padding: 1rem 1.5rem;
+      color: #f0eaff;
+      font-size: 1.1rem;
+      font-family: 'Fira Mono', monospace;
+      font-weight: 500;
+      resize: vertical;
+      transition: 0.2s;
+      box-shadow: 0 0 10px #a44eff40;
+    }
+
+    .morse-input:focus {
+      outline: none;
+      border-color: #e0aaff;
+      box-shadow: 0 0 20px #c47eff, 0 0 5px #b980ff;
+      background: #100926;
+    }
+
+    /* tombol neonya */
+    .btn-group {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 1.8rem 0 1rem;
+    }
+
+    .btn-neon {
+      background: #1f113b;
+      border: 1px solid #b06eff;
+      color: #e9cdff;
+      padding: 0.7rem 1.8rem;
+      font-weight: bold;
+      font-size: 0.9rem;
+      border-radius: 3rem;
+      cursor: pointer;
+      transition: 0.2s;
+      font-family: monospace;
+      letter-spacing: 1px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 8px #00000040;
+    }
+
+    .btn-neon:hover {
+      background: #6d38c4;
+      border-color: #ffc8ff;
+      color: white;
+      box-shadow: 0 0 15px #bb77ff, 0 0 5px #a24eff;
+      transform: scale(1.02);
+    }
+
+    .btn-neon:active {
+      transform: scale(0.97);
+    }
+
+    /* area hasil morse */
+    .result-card {
+      background: #0a031fc9;
+      border-radius: 2rem;
+      padding: 1.3rem 1.5rem;
+      margin: 1rem 0;
+      border: 1px solid #ad6eff;
+      box-shadow: inset 0 0 6px #21004e, 0 5px 15px #00000055;
+    }
+
+    .morse-code {
+      font-family: 'Courier New', 'Fira Code', monospace;
+      font-size: 1.4rem;
+      font-weight: bold;
+      word-break: break-all;
+      letter-spacing: 2px;
+      color: #ffd966;
+      text-shadow: 0 0 5px #ffb347;
+      background: #00000055;
+      padding: 0.7rem;
+      border-radius: 1.5rem;
+      text-align: center;
+    }
+
+    .label-mute {
+      font-size: 0.7rem;
+      color: #b794ff;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin-top: 0.3rem;
+    }
+
+    /* sandi balik (morse ke teks) tambahan biar keren */
+    .reverse-section {
+      margin-top: 1rem;
+      border-top: 1px dashed #a165ff70;
+      padding-top: 1.2rem;
+    }
+
+    small {
+      color: #b388ff;
+    }
+
+    hr {
+      border-color: #632c9a40;
+      margin: 1rem 0;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.7rem;
+      color: #8b6bcb;
+      text-shadow: 0 0 2px black;
+    }
+
+    .warning {
+      color: #ffae70;
+      font-size: 0.7rem;
+      margin-top: 5px;
+    }
+
+    @media (max-width: 550px) {
+      .neon-panel {
+        padding: 1.5rem;
+      }
+      .morse-code {
+        font-size: 1rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="neon-panel">
+  <div class="title-glow">
+    <h1>✦ ARCEUS GENERATOR ✦</h1>
+    <div class="sub">
+      <span class="badge">⚡ MORSE CODE TOOL</span>
+      <span class="badge">🎧 TEXT → SANDI MORSE</span>
+      <span class="badge">🔮 by Syahrul</span>
+    </div>
+  </div>
+
+  <!-- bagian utama text -> morse -->
+  <div class="input-area">
+    <label>📟 MASUKKAN TEKS / KALIMAT</label>
+    <textarea id="textInput" rows="3" class="morse-input" placeholder="Contoh: ARCEUS RULEZ  /  halo dunia  /  syahrul keren"></textarea>
+  </div>
+
+  <div class="btn-group">
+    <button id="convertToMorseBtn" class="btn-neon">✨ GENERATE MORSE ✨</button>
+    <button id="clearBtn" class="btn-neon">🧹 BERSIHKAN</button>
+  </div>
+
+  <div class="output-area">
+    <div class="result-card">
+      <div style="display: flex; justify-content: space-between;">
+        <label>🎛️ SANDI MORSE • OUTPUT</label>
+        <button id="copyMorseBtn" class="btn-neon" style="padding: 0.2rem 1rem; font-size: 0.7rem;">📋 SALIN</button>
+      </div>
+      <div id="morseResult" class="morse-code">▪ ▪ ▪   — — —   ▪ ▪ ▪</div>
+      <div class="label-mute">
+        <span>🔊 (titik = .  strip = -)  spasi antar huruf = "  " (2 spasi) , antar kata = "   " (4 spasi)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- fitur tambahan: morse ke teks (reverse / decoder) -->
+  <div class="reverse-section">
+    <label>🔄 MORSE → TEKS (DECODER)</label>
+    <textarea id="morseInputDecoder" rows="2" class="morse-input" placeholder="Contoh morse: .-. .- - ..- ...   .- .-. -.-. . ..- ..."></textarea>
+    <div class="btn-group" style="margin: 0.8rem 0 0.5rem 0;">
+      <button id="decodeMorseBtn" class="btn-neon" style="padding: 0.4rem 1.5rem;">🔓 TERJEMAHKAN MORSE</button>
+    </div>
+    <div class="result-card" style="margin-top: 0.5rem;">
+      <label>📝 HASIL DEKODE</label>
+      <div id="decodedText" class="morse-code" style="font-size:1.1rem; background:#00000066;">—</div>
+    </div>
+  </div>
+  <footer>
+    🟣 ARCEUS GENERATOR by Syahrul • teknologi neon ungu • text ⇄ morse code
+  </footer>
+</div>
+
+<script>
+  // ---------- DATABASE MORSE INTERNASIONAL ----------
+  const textToMorseMap = new Map([
+    ['A', '.-'], ['B', '-...'], ['C', '-.-.'], ['D', '-..'], ['E', '.'],
+    ['F', '..-.'], ['G', '--.'], ['H', '....'], ['I', '..'], ['J', '.---'],
+    ['K', '-.-'], ['L', '.-..'], ['M', '--'], ['N', '-.'], ['O', '---'],
+    ['P', '.--.'], ['Q', '--.-'], ['R', '.-.'], ['S', '...'], ['T', '-'],
+    ['U', '..-'], ['V', '...-'], ['W', '.--'], ['X', '-..-'], ['Y', '-.--'],
+    ['Z', '--..'],
+    ['0', '-----'], ['1', '.----'], ['2', '..---'], ['3', '...--'], ['4', '....-'],
+    ['5', '.....'], ['6', '-....'], ['7', '--...'], ['8', '---..'], ['9', '----.'],
+    ['.', '.-.-.-'], [',', '--..--'], ['?', '..--..'], ['!', '-.-.--'], ['\'', '.----.'],
+    ['"', '.-..-.'], ['(', '-.--.'], [')', '-.--.-'], ['&', '.-...'], [':', '---...'],
+    [';', '-.-.-.'], ['=', '-...-'], ['+', '.-.-.'], ['-', '-....-'], ['_', '..--.-'],
+    ['/', '-..-.'], ['@', '.--.-.'], [' ', ' ']  // spasi khusus ditangani di fungsi
+  ]);
+
+  // map kebalikan morse -> teks
+  const morseToTextMap = new Map();
+  for (let [key, value] of textToMorseMap.entries()) {
+    if (key !== ' ') {
+      morseToTextMap.set(value, key);
+    }
+  }
+  // tambahkan kode spasi (tidak diperlukan secara terpisah)
+
+  // --- fungsi enkripsi teks biasa ke sandi morse (format standar)
+  function encodeToMorse(plainText) {
+    if (!plainText || plainText.trim() === "") return "";
+    let result = [];
+    let upperText = plainText.toUpperCase();
+    for (let i = 0; i < upperText.length; i++) {
+      let char = upperText[i];
+      if (char === ' ') {
+        // spasi antar kata -> "/" atau separator jelas, tapi kami pakai ' / ' untuk tampilan rapi? 
+        // namun standar morse umum: spasi antar kata digambarkan dengan "   " (tiga spasi) 
+        // sesuai best practice, kita akan gunakan ' / ' sebagai pembatas kata agar user friendly.
+        // namun agar decoder bekerja kita harus konsisten: output encoder akan pakai ' / ' untuk antar kata.
+        result.push('/');
+      } else {
+        let morseChar = textToMorseMap.get(char);
+        if (morseChar) {
+          result.push(morseChar);
+        } else {
+          // karakter tidak dikenal diganti dengan '?'
+          result.push('?');
+        }
+      }
+    }
+    // gabungkan antar huruf dengan spasi tunggal " ", dan antar kata " / " 
+    // standar enkode: tiap huruf pisah spasi, kata pisah " / "
+    let finalMorse = [];
+    for (let i = 0; i < result.length; i++) {
+      let token = result[i];
+      if (token === '/') {
+        finalMorse.push(' / ');
+      } else {
+        finalMorse.push(token);
+      }
+    }
+    // gabungkan dengan spasi antar elemen (huruf) dan separator kata menjadi spasi-tiga-spasi? biar rapi.
+    // tapi yang umum adalah antara huruf 1 spasi, antara kata 3 spasi. Kita akan gunakan pendekatan simple:
+    // antara huruf: " " (spasi tunggal), antara kata "   " (tiga spasi)
+    // namun karena array token sudah mengandung '/', kita ubah dengan tiga spasi.
+    let rebuilt = [];
+    for (let i = 0; i < result.length; i++) {
+      let item = result[i];
+      if (item === '/') {
+        rebuilt.push('   '); // tiga spasi sebagai pemisah kata
+      } else {
+        rebuilt.push(item);
+      }
+    }
+    // gabungkan dengan satu spasi untuk antar huruf.
+    let output = rebuilt.join(' ');
+    // membersihkan spasi berlebihan: ganti multiple spasi menjadi optimal.
+    output = output.replace(/   /g, '   '); // menjaga tiga spasi
+    // jika ada tanda '/'' tidak sengaja karena penggantian tidak perlu, aman.
+    output = output.replace(/ \/ /g, '   '); // double safe
+    // trim
+    return output.trim();
+  }
+
+  // --- dekode dari morse ke teks (support format: titik dan strip, spasi antar huruf 1 spasi, antar kata 3 spasi atau simbol '/')
+  function decodeMorse(morseString) {
+    if (!morseString || morseString.trim() === "") return "";
+    let trimmed = morseString.trim();
+    // normalisasi: kita support separator kata dengan ' / ' atau tiga spasi, atau dua spasi?
+    // kita ubah semua varian antar kata menjadi ' / ' untuk splitting.
+    // step: ganti tiga spasi atau lebih menjadi token ' / ' sementara.
+    let normalized = trimmed.replace(/\s{3,}/g, ' / ');
+    // lalu split berdasarkan spasi tunggal untuk mendapatkan token huruf morse, dan slash sebagai penanda kata.
+    let tokens = normalized.split(' ');
+    let words = [];
+    let currentWord = [];
+    for (let token of tokens) {
+      if (token === '/') {
+        if (currentWord.length > 0) {
+          words.push(currentWord.join(''));
+          currentWord = [];
+        }
+        // tanda pemisah kata, abaikan token slash (push kosong antar kata)
+        // untuk memastikan spasi kata, kita push space setelah join nanti
+      } else if (token !== '') {
+        // token morse seperti ".-" atau "..."
+        let decodedChar = morseToTextMap.get(token);
+        if (decodedChar) {
+          currentWord.push(decodedChar);
+        } else {
+          currentWord.push('?'); // untuk kode morse tidak dikenal
+        }
+      }
+    }
+    if (currentWord.length > 0) words.push(currentWord.join(''));
+    return words.join(' ');
+  }
+
+  // DOM elements
+  const textInput = document.getElementById('textInput');
+  const morseResultDiv = document.getElementById('morseResult');
+  const convertBtn = document.getElementById('convertToMorseBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const copyMorseBtn = document.getElementById('copyMorseBtn');
+  const morseInputDecoder = document.getElementById('morseInputDecoder');
+  const decodeMorseBtn = document.getElementById('decodeMorseBtn');
+  const decodedTextDiv = document.getElementById('decodedText');
+
+  // Fungsi utama generate morse dari text
+  function generateMorse() {
+    let rawText = textInput.value;
+    if (!rawText.trim()) {
+      morseResultDiv.innerText = '⚠️ [masukkan teks terlebih dahulu]';
+      return;
+    }
+    let morseCode = encodeToMorse(rawText);
+    if (morseCode === "") {
+      morseResultDiv.innerText = '▪ ▪ ▪   — — —   ▪ ▪ ▪';
+    } else {
+      morseResultDiv.innerText = morseCode;
+    }
+  }
+
+  // fungsi decode dari input morse field
+  function performDecode() {
+    let morseRaw = morseInputDecoder.value;
+    if (!morseRaw.trim()) {
+      decodedTextDiv.innerText = '⛔ Masukkan kode Morse (contoh: .-. .- - ..- ...)';
+      return;
+    }
+    let decoded = decodeMorse(morseRaw);
+    if (decoded === "") {
+      decodedTextDiv.innerText = '❓ Tidak dapat diterjemahkan';
+    } else {
+      decodedTextDiv.innerText = decoded;
+    }
+  }
+
+  // bersihkan semua field
+  function clearAll() {
+    textInput.value = '';
+    morseResultDiv.innerText = '▪ ▪ ▪   — — —   ▪ ▪ ▪';
+    morseInputDecoder.value = '';
+    decodedTextDiv.innerText = '—';
+  }
+
+  // copy hasil morse ke clipboard
+  async function copyMorseToClip() {
+    let morseText = morseResultDiv.innerText;
+    if (morseText === '▪ ▪ ▪   — — —   ▪ ▪ ▪' || morseText.includes('masukkan teks')) {
+      // jangan copy placeholder error
+      let warnMsg = 'Tidak ada hasil morse untuk disalin. Generate dulu!';
+      morseResultDiv.innerText = warnMsg;
+      setTimeout(() => {
+        if (textInput.value.trim() !== "") generateMorse();
+        else morseResultDiv.innerText = '▪ ▪ ▪   — — —   ▪ ▪ ▪';
+      }, 1200);
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(morseText);
+      // feedback visual
+      let original = morseResultDiv.innerText;
+      morseResultDiv.innerText = '✓ TERSALIN! ✓';
+      setTimeout(() => {
+        morseResultDiv.innerText = original;
+      }, 1000);
+    } catch (err) {
+      alert('Gagal menyalin: ' + err);
+    }
+  }
+
+  // auto realtime? tidak berlebihan, kami pakai event listener tambahan optional (biar smooth)
+  convertBtn.addEventListener('click', generateMorse);
+  clearBtn.addEventListener('click', clearAll);
+  copyMorseBtn.addEventListener('click', copyMorseToClip);
+  decodeMorseBtn.addEventListener('click', performDecode);
+
+  // tambahan: enter pintasan? biar nyaman, user bisa tekan Ctrl+Enter di area text bisa generate morse
+  textInput.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      generateMorse();
+    }
+  });
+  morseInputDecoder.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      performDecode();
+    }
+  });
+
+  // contoh demo awal default menaruh teks sambutan
+  textInput.value = "Arceus by Syahrul";
+  generateMorse(); // generate otomatis
+  morseInputDecoder.value = ".- .-. -.-. . ..- ...   ..-. --- .-.   . ...- . .-.";
+  performDecode();
+
+  // efek neon dinamis tambahan? biar makin ungu, kita tambahkan shadow bergerak kecil (optional)
+  const panel = document.querySelector('.neon-panel');
+  setInterval(() => {
+    // soft breathing effect neon
+    let glowIntensity = (Math.sin(Date.now() / 1800) * 0.5 + 0.6).toFixed(2);
+    panel.style.boxShadow = `0 0 ${10 + Number(glowIntensity) * 8}px #b77effaa, 0 0 ${25 + Number(glowIntensity) * 10}px #9b59b688, 0 0 0 2px rgba(180, 110, 255, 0.25) inset`;
+  }, 200);
+</script>
+</body>
+  </html>
